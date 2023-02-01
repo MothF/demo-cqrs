@@ -1,0 +1,42 @@
+version: "3.9"
+
+networks:
+  demo-cqrs-network:
+    driver: bridge
+
+services:
+  postgres-db:
+    container_name: postgres-db
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
+    networks:
+      - demo-cqrs-network
+#  customers-service:
+#    container_name: customers-service
+#    image: customers-service:backend
+#    restart: unless-stopped
+#    environment:
+#      APP_NAME: ${CUSTOMERS_SERVICE}
+#      APP_PORT: 8081
+#      SERVICE_DISCOVERY_HOST: service-discovery
+#      SERVICE_DISCOVERY_PORT: 8761
+#      RDS_HOSTNAME: postgres-db
+#      RDS_PORT: 5432
+#      RDS_PASSWORD: ${DB_PASSWORD}
+#      RDS_USERNAME: ${DB_USERNAME}
+#      RDS_DB_NAME: ${DB_NAME}
+#      SPRING_PROFILES_ACTIVE: docker
+#    depends_on:
+#      - service-discovery
+#      - postgres-db
+#      - api-gateway
+#    ports:
+#      - "8081"
+#    networks:
+#      - spring-cloud-petclinic-network
